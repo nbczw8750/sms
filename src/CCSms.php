@@ -13,7 +13,7 @@ class CCSms
 {
     protected $error = "";
     /*
-     * 插入发送数据
+     * 插入发送数据 
      * $param = array(
      *  'interface_id' => '接口id',
      *  'content' => '内容',
