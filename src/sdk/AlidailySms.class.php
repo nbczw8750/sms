@@ -20,10 +20,11 @@ class AlidailySms extends Sms{
         $data = array();
         $data['rec_num'] = implode(",",$param['mobile']);
         if($param['content_param']){
-            $data['sms_param'] = json_encode(contentParamFormat($param['content_param']));
+            $data['sms_param'] = $param['content_param'];
         }
-        $data['sms_free_sign_name'] = $param['sms_free_sign_name'];
-        $data['sms_template_code'] = $param['sms_template_code'];
+        $param['other_param'] = json_decode($param['other_param'],true);
+        $data['sms_free_sign_name'] = isset($param['other_param']['sms_free_sign_name']) ? $param['other_param']['sms_free_sign_name'] : '' ;
+        $data['sms_template_code'] = isset($param['other_param']['sms_template_code'])  ? $param['other_param']['sms_template_code'] : '';
         $result = $this->sendsms($data);
         if($result){
             $return['result'] = $result;
@@ -48,24 +49,24 @@ class AlidailySms extends Sms{
      * @return bool
      * */
     public function get($param = array() , &$return = ""){
-        $result = $this->call("ws/Get");
-        $return = $result;
-        if($result >= 0) {
-            $temp = explode("||",$result);
-            $data = array();
-            foreach($temp as $val){
-                if(empty($val)) continue;
-                $report = explode("#",$val);
-                $data[]['receive_phone'] = $report[0];
-                $data[]['content'] = $report[1];
-                $data[]['send_time'] = $report[2];
-                $data[]['task_id'] = $report[3];
-                $data[]['report_result'] = $val;
-                $data[]['report_status'] = $result;
-                $data[]['status'] = 1;
-            }
-            return $data;
-        }
+//        $result = $this->call("ws/Get");
+//        $return = $result;
+//        if($result >= 0) {
+//            $temp = explode("||",$result);
+//            $data = array();
+//            foreach($temp as $val){
+//                if(empty($val)) continue;
+//                $report = explode("#",$val);
+//                $data[]['receive_phone'] = $report[0];
+//                $data[]['content'] = $report[1];
+//                $data[]['send_time'] = $report[2];
+//                $data[]['task_id'] = $report[3];
+//                $data[]['report_result'] = $val;
+//                $data[]['report_status'] = $result;
+//                $data[]['status'] = 1;
+//            }
+//            return $data;
+//        }
         return false;
     }
     /**

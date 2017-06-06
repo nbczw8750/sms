@@ -13,7 +13,7 @@ class TestSms extends Sms{
      * @return bool
      * */
     public function send($param = array() , &$return = array()){
-
+        $return['task_id'] = 11111;
         return true;
     }
     /*
@@ -23,7 +23,7 @@ class TestSms extends Sms{
      * @return bool
      * */
     public function check($param = array() , &$return = ""){
-        return false;
+        return 9999;
     }
     /*
      * 获取状态
@@ -32,21 +32,23 @@ class TestSms extends Sms{
      * @return bool
      * */
     public function get($param = array() , &$return = ""){
-        $result = $this->call("ws/Get");
+        $result = "13056941231#成功#1213#11111#33#1";
         $return = $result;
-        if($result >= 0) {
+        if($result) {
             $temp = explode("||",$result);
             $data = array();
+            $i = 0;
             foreach($temp as $val){
                 if(empty($val)) continue;
                 $report = explode("#",$val);
-                $data[]['receive_phone'] = $report[0];
-                $data[]['content'] = $report[1];
-                $data[]['send_time'] = $report[2];
-                $data[]['task_id'] = $report[3];
-                $data[]['report_result'] = $val;
-                $data[]['report_status'] = $result;
-                $data[]['status'] = 1;
+                $data[$i]['receive_phone'] = $report[0];
+                $data[$i]['content'] = $report[1];
+                $data[$i]['send_time'] = $report[2];
+                $data[$i]['task_id'] = $report[3];
+                $data[$i]['report_result'] = $val;
+                $data[$i]['report_status'] = 1;
+                $data[$i]['status'] = 1;
+                $i++;
             }
             return $data;
         }

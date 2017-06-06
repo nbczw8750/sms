@@ -1,5 +1,6 @@
 <?php
 namespace nbczw8750\sms;
+require dirname ( __FILE__ )."/sdk/Sms.class.php";
 /**
  * Created by PhpStorm.
  * User: 志伟
@@ -14,7 +15,6 @@ abstract class CCSms {
             $return = $classPath."文件不存在";
             return false;
         }
-        require_once dirname ( __FILE__ )."/sdk/Sms.class.php";
         require_once $classPath;
         if (class_exists ( $name )) {
             return new $name ( $param );
