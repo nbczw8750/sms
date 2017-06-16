@@ -39,7 +39,7 @@ class CCTpl
             unset($tmp);
         }
         $tpl = preg_replace_callback ( '/\{([a-zA-Z_]+)\}/', function ($match) use($param) {
-            return $param [$match [1]];
+            return isset($param [$match [1]]) ? $param [$match [1]] : "";
         }, $tpl );
         return trim($tpl);
     }

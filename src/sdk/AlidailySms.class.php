@@ -28,7 +28,7 @@ class AlidailySms extends Sms{
         $result = $this->sendsms($data);
         if($result){
             $return['result'] = $result;
-            $return['post_result'] = json_encode($result);
+            $return['post_result'] = isset($result['sub_msg']) ? $result['sub_msg'] : json_encode($result);
             if(isset($result['result']['success']) && ( $result['result']['success'] == "true" || $result['result']['success'] == true)) return true;
         }
         return false;
