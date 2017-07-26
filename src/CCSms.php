@@ -8,7 +8,7 @@ require dirname ( __FILE__ )."/sdk/Sms.class.php";
  * Time: 下午2:50
  */
 abstract class CCSms {
-    public static function getInstance($type, $param = null ,&$return) {
+    public static function getInstance($type, $param = null ,&$return = "") {
         $name = ucfirst ( strtolower ( $type ) ) . 'Sms';
         $classPath = dirname ( __FILE__ )."/sdk/{$name}.class.php";
         if(!file_exists($classPath)){

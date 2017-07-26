@@ -22,7 +22,7 @@ class AlidailySms extends Sms{
         if($param['content_param']){
             $data['sms_param'] = $param['content_param'];
         }
-        $param['other_param'] = json_decode($param['other_param'],true);
+        !is_array($param['other_param']) && $param['other_param'] = json_decode($param['other_param'],true);
         $data['sms_free_sign_name'] = isset($param['other_param']['sms_free_sign_name']) ? $param['other_param']['sms_free_sign_name'] : '' ;
         $data['sms_template_code'] = isset($param['other_param']['sms_template_code'])  ? $param['other_param']['sms_template_code'] : '';
         $result = $this->sendsms($data);

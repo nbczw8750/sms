@@ -27,9 +27,9 @@ abstract class Sms {
 
         $this->loginname = $param['loginname'];
         $this->password = $param['password'];
-        $this->spcode = $param['spcode'];
+        isset($param['spcode']) && $this->spcode = $param['spcode'];
     }
-    public static function getInstance($type, $param = null ,&$return) {
+    public static function getInstance($type, $param = null ,&$return = "") {
         $name = ucfirst ( strtolower ( $type ) ) . 'Sms';
         $classPath = dirname ( __FILE__ )."/sdk/{$name}.class.php";
         if(!file_exists($classPath)){
