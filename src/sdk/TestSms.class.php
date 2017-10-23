@@ -52,7 +52,7 @@ class TestSms extends Sms{
             }
             return $data;
         }
-        return false;
+        return null;
     }
     /**
      * 组装接口调用参数 并调用接口
