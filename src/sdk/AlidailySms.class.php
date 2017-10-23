@@ -85,7 +85,7 @@ class AlidailySms extends Sms{
                     }
                     $data['status'] = $status;
                     $data['receive_phone'] = $value['rec_num'];;
-                    $data['report_result'] = strtotime($value['sms_receiver_time']);
+                    $data['report_time'] = strtotime($value['sms_receiver_time']);
                     $data['serial_number'] = $param["serial_number"];
                 }
             }
