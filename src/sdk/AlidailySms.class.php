@@ -72,26 +72,37 @@ class AlidailySms extends Sms{
         if($result && !empty($result['values'])){
             foreach ($result['values'] as $item){
                 foreach ($item as $value){
-                    $data = array();
-                    $data['report_result'] = json_encode($value);
-                    $data['report_status'] = $value['sms_status'];
-                    $status = 0;
-                    if (1 == $value['sms_status']){
+                    $now = time();
+                    if (isset($value['sms_receiver_time'])){
+                        $data = array();
+                        $data['report_result'] = json_encode($value);
+                        $data['report_status'] = $value['sms_status'];
                         $status = 0;
-                    }elseif ( 2 == $value['sms_status']){
-                        $status = -2;
-                    }elseif ( 3 == $value['sms_status']){
-                        $status = 1;
+                        if (1 == $value['sms_status']){
+                            $status = 0;
+                        }elseif ( 2 == $value['sms_status']){
+                            $status = -2;
+                        }elseif ( 3 == $value['sms_status']){
+                            $status = 1;
+                        }
+                        $data['status'] = $status;
+                        $data['receive_phone'] = $value['rec_num'];;
+                        $data['report_time'] = strtotime($value['sms_receiver_time']);
+                        $data['serial_number'] = $param["serial_number"];
+                    }else if (isset($value['sms_send_time']) && ($now - strtotime($value['sms_send_time'])) > 172800 ){ //超过48小时还没收到 说明发送失败
+                        $data = array();
+                        $data['report_result'] = json_encode($value);
+                        $data['report_status'] = $value['sms_status'];
+                        $status = -2; //定性为发送失败
+                        $data['status'] = $status;
+                        $data['receive_phone'] = $value['rec_num'];;
+                        $data['report_time'] = $now;
+                        $data['serial_number'] = $param["serial_number"];
                     }
-                    $data['status'] = $status;
-                    $data['receive_phone'] = $value['rec_num'];;
-                    $data['report_time'] = strtotime($value['sms_receiver_time']);
-                    $data['serial_number'] = $param["serial_number"];
                 }
             }
-        }else{
-            $return = $response;
         }
+        $return = $result;
         return $data;
     }
     /**
